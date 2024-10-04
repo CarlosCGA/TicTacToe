@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -95,4 +99,20 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //FIREBASE
+    implementation(platform("com.google.firebase:firebase-bom:31.4.0"))
+    implementation("com.google.firebase:firebase-database-ktx")
+
+    //DATASTORE
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //DAGGER HILT
+    implementation("com.google.dagger:hilt-android:2.48")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    ksp("com.google.dagger:hilt-compiler:2.48")
+
+    //NAVIGATION
+    implementation("androidx.navigation:navigation-compose:2.7.0")
+    androidTestImplementation("androidx.navigation:navigation-testing:2.7.0")
 }
