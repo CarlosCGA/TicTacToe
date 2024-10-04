@@ -6,6 +6,34 @@ plugins {
 android {
     namespace = "com.cazulabs.tictactoe"
     compileSdk = 34
+    version = "1.0.0"
+
+    task("appRelease") {
+        doLast {
+            file("./versionName.txt").writeText(version.toString())
+        }
+    }
+
+    flavorDimensions.add("debug")
+    productFlavors {
+        create("free") {
+            dimension = "debug"
+            val appName = "TicTacToe"
+            manifestPlaceholders["appName"] = appName
+            //applicationIdSuffix = ".demo"
+            //versionName = "1.0"
+            //versionNameSuffix = ".0"
+            //versionCode = (versionName + versionNameSuffix).replace(".", "").toInt()
+            //val apkName = "${appName}_$versionName$versionNameSuffix.apk"
+            val apkName = "${appName}_$version.apk"
+
+            // change app name block below
+            buildOutputs.all {
+                val variantOutputImpl = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+                variantOutputImpl.outputFileName =  apkName
+            }
+        }
+    }
 
     defaultConfig {
         applicationId = "com.cazulabs.tictactoe"
