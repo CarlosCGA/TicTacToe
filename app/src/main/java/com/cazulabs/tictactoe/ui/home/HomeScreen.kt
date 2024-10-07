@@ -15,47 +15,46 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview(showSystemUi = true)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(viewModel: HomeViewModel) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.weight(1F))
 
-        CreateGame()
+        CreateGame(onCreateGame = { viewModel.onCreateGame() })
 
         Spacer(modifier = Modifier.weight(1F))
 
         Divider(
             Modifier
                 .fillMaxWidth()
-                .height(2.dp))
+                .height(2.dp)
+        )
 
         Spacer(modifier = Modifier.weight(1F))
 
-        JoinTheGame()
+        JoinTheGame(onJoinGame = { viewModel.onJoinGame(it) })
 
         Spacer(modifier = Modifier.weight(1F))
     }
 }
 
 @Composable
-fun CreateGame() {
-    Button(onClick = { /*TODO*/ }) {
+fun CreateGame(onCreateGame: () -> Unit) {
+    Button(onClick = { onCreateGame() }) {
         Text(text = "Create game")
     }
 }
 
 @Composable
-fun JoinTheGame() {
+fun JoinTheGame(onJoinGame: (String) -> Unit) {
     var gameName by rememberSaveable {
         mutableStateOf("")
     }
     TextField(value = gameName, onValueChange = { gameName = it })
 
-    Button(onClick = { /*TODO*/ }, enabled = gameName.isNotEmpty()) {
+    Button(onClick = { onJoinGame(gameName) }, enabled = gameName.isNotEmpty()) {
         Text(text = "Join the game")
     }
 }
