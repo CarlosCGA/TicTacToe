@@ -18,9 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
-@Preview(showSystemUi = true)
 @Composable
-fun GameScreen(viewModel: GameViewModel = hiltViewModel()) {
+fun GameScreen(
+    viewModel: GameViewModel = hiltViewModel(),
+    gameId: String,
+    playerId: String,
+    owner: Boolean
+) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "IdPartida")
         Text(text = "GameAction")
