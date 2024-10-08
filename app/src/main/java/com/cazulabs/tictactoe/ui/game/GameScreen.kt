@@ -16,10 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Preview(showSystemUi = true)
 @Composable
-fun GameScreen() {
+fun GameScreen(viewModel: GameViewModel = hiltViewModel()) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "IdPartida")
         Text(text = "GameAction")
