@@ -26,8 +26,8 @@ fun GameScreen(
     owner: Boolean
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "IdPartida")
-        Text(text = "GameAction")
+        Text(text = "IdMatch: $gameId")
+        Text(text = "GameAction: Waiting for opponent...")
 
         Spacer(modifier = Modifier.size(16.dp))
 
