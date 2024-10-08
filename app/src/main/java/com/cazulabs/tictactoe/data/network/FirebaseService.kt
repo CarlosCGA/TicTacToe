@@ -12,7 +12,9 @@ class FirebaseService @Inject constructor(private val reference: DatabaseReferen
 
     fun createGame(gameData: GameData) {
         val gameReference = reference.child(PATH).push()
-        gameReference.setValue(gameData)
+        val key = gameReference.key
+        val newGame = gameData.copy(gameId = key)
+        gameReference.setValue(newGame)
     }
 
 }
