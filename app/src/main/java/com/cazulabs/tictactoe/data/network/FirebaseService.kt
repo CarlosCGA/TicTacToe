@@ -2,6 +2,7 @@ package com.cazulabs.tictactoe.data.network
 
 import com.cazulabs.tictactoe.data.network.model.GameData
 import com.cazulabs.tictactoe.ui.model.GameModel
+import com.cazulabs.tictactoe.ui.model.PlayerType
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.snapshots
@@ -40,6 +41,10 @@ class FirebaseService @Inject constructor(private val reference: DatabaseReferen
         if(gameData.gameId != null) {
             reference.child(PATH).child(gameData.gameId).setValue(gameData)
         }
+    }
+
+    fun onPlayerMoves(position: Int) {
+        TODO("Not yet implemented")
     }
 
 }

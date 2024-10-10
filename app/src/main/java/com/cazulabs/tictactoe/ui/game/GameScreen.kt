@@ -43,16 +43,22 @@ fun GameScreen(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        Board(game)
+        Board(
+            game = game,
+            onItemClicked = { position ->
+                viewModel.onPlayerMoves(position)
+            }
+        )
     }
 
 }
 
 @Composable
-fun Board(game: GameModel?) {
+fun Board(game: GameModel?, onItemClicked: (Int) -> Unit) {
+    if(game == null) return
 
-    val status = if (game?.isGameReady == true)
-        if (game?.isMyTurn == true)
+    val status = if (game.isGameReady)
+        if (game.isMyTurn)
             "Your turn"
         else
             "Opponent turn"
@@ -65,21 +71,21 @@ fun Board(game: GameModel?) {
 
     Column {
         Row {
-            GameItem()
-            GameItem()
-            GameItem()
+            GameItem(game.board[0]) { onItemClicked(0) }
+            GameItem(game.board[1]) { onItemClicked(1) }
+            GameItem(game.board[2]) { onItemClicked(2) }
         }
 
         Row {
-            GameItem()
-            GameItem()
-            GameItem()
+            GameItem(game.board[3]) { onItemClicked(3) }
+            GameItem(game.board[4]) { onItemClicked(4) }
+            GameItem(game.board[5]) { onItemClicked(5) }
         }
 
         Row {
-            GameItem()
-            GameItem()
-            GameItem()
+            GameItem(game.board[6]) { onItemClicked(6) }
+            GameItem(game.board[7]) { onItemClicked(7) }
+            GameItem(game.board[8]) { onItemClicked(8) }
         }
     }
 }
@@ -87,14 +93,15 @@ fun Board(game: GameModel?) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun GameItem() {
-    Box(
+fun GameItem(playerType: PlayerType, onItemClicked: () -> Unit) {
+    Card(
         modifier = Modifier
             .padding(12.dp)
             .size(64.dp)
             .border(BorderStroke(2.dp, Color.Black)),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "X")
+        onClick = { onItemClicked() }) {
+        Box(contentAlignment = Alignment.Center) {
+            Text(text = playerType.symbol)
+        }
     }
 }
