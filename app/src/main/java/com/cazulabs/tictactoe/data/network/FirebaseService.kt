@@ -34,11 +34,12 @@ class FirebaseService @Inject constructor(private val reference: DatabaseReferen
         return reference.child("$PATH/$gameId").snapshots.map { dataSnapshot ->
             dataSnapshot.getValue(GameData::class.java)?.toModel()
         }
+    }
 
-        /*
-        val reference = reference.child(PATH)
-        val gameData = reference.get().result.child(gameId).getValue(GameData::class.java)
-        */
+    fun updateGame(gameData: GameData) {
+        if(gameData.gameId != null) {
+            reference.child(PATH).child(gameData.gameId).setValue(gameData)
+        }
     }
 
 }

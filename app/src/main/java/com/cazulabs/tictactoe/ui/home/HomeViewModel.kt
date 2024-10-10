@@ -14,7 +14,7 @@ class HomeViewModel @Inject constructor(private val firebaseService: FirebaseSer
     fun onCreateGame(navigateToGame: (String, String, Boolean) -> Unit) {
         val game = createNewGame()
         val gameId = firebaseService.createGame(game)
-        val playerId = game.player1?.userId.orEmpty()
+        val playerId = game.player1?.playerId.orEmpty()
         val owner = true
 
         navigateToGame(gameId, playerId, owner)
