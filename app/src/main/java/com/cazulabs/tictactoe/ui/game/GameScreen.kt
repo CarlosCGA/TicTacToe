@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cazulabs.tictactoe.ui.model.GameModel
+import com.cazulabs.tictactoe.ui.model.PlayerType
 
 @Composable
 fun GameScreen(
@@ -48,8 +51,11 @@ fun GameScreen(
 @Composable
 fun Board(game: GameModel?) {
 
-    val status = if(game?.isGameReady == true)
-        "Your turn / Opponent turn"
+    val status = if (game?.isGameReady == true)
+        if (game?.isMyTurn == true)
+            "Your turn"
+        else
+            "Opponent turn"
     else
         "Waiting for opponent..."
 
@@ -79,6 +85,7 @@ fun Board(game: GameModel?) {
 }
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun GameItem() {
     Box(
