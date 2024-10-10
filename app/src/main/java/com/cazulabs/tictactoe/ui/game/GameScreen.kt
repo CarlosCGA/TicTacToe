@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +26,11 @@ fun GameScreen(
     playerId: String,
     owner: Boolean
 ) {
+
+    LaunchedEffect(key1 = true) {
+        viewModel.joinToGame(gameId, playerId, owner)
+    }
+
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "IdMatch: $gameId")
         Text(text = "GameAction: Waiting for opponent...")
