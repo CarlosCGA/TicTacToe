@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cazulabs.tictactoe.data.network.FirebaseService
-import com.cazulabs.tictactoe.data.network.model.GameData
+import com.cazulabs.tictactoe.ui.model.GameModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,17 +17,13 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
 
     private lateinit var playerId: String
 
-    val _game = MutableLiveData<GameData>()
-    val game: LiveData<GameData> = _game
-
-    private fun getMatchState(gameId: String) {
-        _game.value = firebaseService.getGameData(gameId)
-    }
+    val _game = MutableLiveData<GameModel>()
+    private val game: LiveData<GameModel> = _game
 
     fun joinToGame(gameId: String, playerId: String, owner: Boolean) {
         this.playerId = playerId
 
-        if(owner)
+        if (owner)
             joinGameLikeOwner(gameId)
         else
             joinGameLikeGuest(gameId)
@@ -37,6 +33,7 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
         viewModelScope.launch {
             firebaseService.joinToGame(gameId).collect {
                 Log.i("CARLOS", it.toString())
+
             }
         }
     }
