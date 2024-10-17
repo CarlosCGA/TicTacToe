@@ -37,25 +37,32 @@ fun GameScreen(
     }
 
     val game: GameModel? by viewModel.game.collectAsState()
+    val winner: PlayerType? by viewModel.winner.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "IdMatch: $gameId")
+    if (winner != null) {
+        WonScreen(viewModel.getPlayer()!!, winner!!)
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "IdMatch: $gameId")
 
-        Spacer(modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.size(16.dp))
 
-        Board(
-            game = game,
-            onItemClicked = { position ->
-                viewModel.onPlayerMoves(position)
-            }
-        )
+            Board(
+                game = game,
+                onItemClicked = { position ->
+                    viewModel.onPlayerMoves(position)
+                }
+            )
+        }
     }
-
 }
 
 @Composable
 fun Board(game: GameModel?, onItemClicked: (Int) -> Unit) {
-    if(game == null) return
+    if (game == null) return
 
     val status = if (game.isGameReady)
         if (game.isMyTurn)
@@ -103,5 +110,17 @@ fun GameItem(playerType: PlayerType, onItemClicked: () -> Unit) {
         Box(contentAlignment = Alignment.Center) {
             Text(text = playerType.symbol)
         }
+    }
+}
+
+@Composable
+fun WonScreen(player: PlayerType, winner: PlayerType) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(
+            text = if (player == winner)
+                "YOU WIN!"
+            else
+                "Oh shit. You are a piece of shit..."
+        )
     }
 }
