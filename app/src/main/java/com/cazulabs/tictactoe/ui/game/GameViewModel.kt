@@ -34,7 +34,8 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
     private fun join(gameId: String) {
         viewModelScope.launch {
             firebaseService.joinToGame(gameId).collect {
-                val result = it?.copy(isGameReady = it.player2 != null, isMyTurn = isMyTurn())
+                val result =
+                    it?.copy(isGameReady = it.player2 != null, isMyTurn = isMyTurn(it.playerTurn))
                 _game.value = result
             }
         }
@@ -56,25 +57,30 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
         }
     }
 
-    private fun isMyTurn() = game.value?.playerTurn?.playerId == playerId
+    private fun isMyTurn(playerTurn: PlayerModel) = playerTurn.playerId == playerId
 
     fun onPlayerMoves(position: Int) {
         val currentGame = _game.value ?: return
 
-        if (currentGame.isGameReady && currentGame.board[position] == PlayerType.Empty && isMyTurn()) {
+        if (currentGame.isGameReady && currentGame.board[position] == PlayerType.Empty && isMyTurn(
+                currentGame.playerTurn
+            )
+        ) {
             viewModelScope.launch {
                 val newBoard = currentGame.board.toMutableList()
                 newBoard[position] = getPlayer() ?: PlayerType.Empty
-                firebaseService.updateGame(currentGame.copy(
-                    board = newBoard,
-                    playerTurn = getOpponentPlayer()!!
-                ).toData())
+                firebaseService.updateGame(
+                    currentGame.copy(
+                        board = newBoard,
+                        playerTurn = getOpponentPlayer()!!
+                    ).toData()
+                )
             }
         }
     }
 
     fun getPlayer(): PlayerType? {
-        return when{
+        return when {
             (game.value?.player1?.playerId == playerId) -> PlayerType.FirstPlayer
             (game.value?.player2?.playerId == playerId) -> PlayerType.SecondPlayer
             else -> null
@@ -82,7 +88,7 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
     }
 
     private fun getOpponentPlayer(): PlayerModel? {
-        return when{
+        return when {
             (game.value?.player1?.playerId == playerId) -> game.value?.player2
             (game.value?.player2?.playerId == playerId) -> game.value?.player1
             else -> null
