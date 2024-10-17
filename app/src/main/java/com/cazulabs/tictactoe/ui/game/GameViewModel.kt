@@ -19,7 +19,7 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
 
     private lateinit var playerId: String
 
-    val _game = MutableStateFlow<GameModel?>(null)
+    private val _game = MutableStateFlow<GameModel?>(null)
     val game: StateFlow<GameModel?> = _game
 
     fun joinToGame(gameId: String, playerId: String, owner: Boolean) {
@@ -79,7 +79,7 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
         }
     }
 
-    fun getPlayer(): PlayerType? {
+    private fun getPlayer(): PlayerType? {
         return when {
             (game.value?.player1?.playerId == playerId) -> PlayerType.FirstPlayer
             (game.value?.player2?.playerId == playerId) -> PlayerType.SecondPlayer
