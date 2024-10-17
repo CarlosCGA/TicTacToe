@@ -1,0 +1,37 @@
+name: Build & Publish Debug APK on GitHub
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Load Google Service file
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICE_JSON_ENCRYPTED_AS_GITHUB }}
+        run: echo $DATA | base64 -di > app/google-services.json
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+      - name: Generate version.txt for Hub release
+        run: ./gradlew appRelease
+      - name: Releasing using Hub
+        uses: CarlosCGA/action-release-debugapk@master
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          APP_FOLDER: app
+          #RELEASE_TITLE: New Build
+          PWD: /github/workspace
