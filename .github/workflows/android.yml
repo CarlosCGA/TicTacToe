@@ -17,7 +17,7 @@ jobs:
           java-version: 17
       - name: Load Google Service file
         env:
-          DATA: ${{ secrets.GOOGLE_SERVICE_JSON_ENCRYPTED_AS_GITHUB }}
+          DATA: ${{ secrets.GOOGLE_SERVICE }}
         run: echo $DATA | base64 -di > app/google-services.json
       - name: Make Gradle executable
         run: chmod +x ./gradlew
