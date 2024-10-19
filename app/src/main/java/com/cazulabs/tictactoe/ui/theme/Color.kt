@@ -14,4 +14,9 @@ val Orange1 = Color(0xFFFFBF1F)
 val Orange2 = Color(0xFFFFAC05)
 val Orange3 = Color(0xFFD07B03)
 val OrangeDetail = Color(0xFFFEE02F)
-val OrangeDegreeFrom = Color(0xFFF49000)
+
+
+val Blue1 = Color(0xFF01B1EA)
+val Blue2 = Color(0xFF03A1FA)
+val Blue3 = Color(0xFF026ACF)
+val BlueDetail = Color(0xFFC7E5FE)

@@ -33,11 +33,17 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cazulabs.tictactoe.R
+import com.cazulabs.tictactoe.ui.theme.Blue1
+import com.cazulabs.tictactoe.ui.theme.Blue2
+import com.cazulabs.tictactoe.ui.theme.Blue3
+import com.cazulabs.tictactoe.ui.theme.BlueDetail
 import com.cazulabs.tictactoe.ui.theme.Orange1
 import com.cazulabs.tictactoe.ui.theme.Orange2
 import com.cazulabs.tictactoe.ui.theme.Orange3
@@ -102,9 +108,38 @@ fun JoinTheGame(onJoinGame: (String) -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun ClashRoyaleButton() {
+fun BattleButton() {
+    ClashRoyaleButton(
+        color3 = Orange3,
+        color2 = Orange2,
+        color1 = Orange1,
+        colorDetail = OrangeDetail,
+        text = "Battle"
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun JoinButton() {
+    ClashRoyaleButton(
+        color3 = Blue3,
+        color2 = Blue2,
+        color1 = Blue1,
+        colorDetail = BlueDetail,
+        text = "Join"
+    )
+}
+
+@Composable
+fun ClashRoyaleButton(
+    color3: Color,
+    color2: Color,
+    color1: Color,
+    colorDetail: Color,
+    text: String
+) {
     Box(modifier = Modifier.padding(8.dp)) {
-        //Borde negro
+        //Black border
         Box(
             modifier = Modifier
                 .height(50.dp)
@@ -112,29 +147,29 @@ fun ClashRoyaleButton() {
                 .border(1.dp, Color.Black, RoundedCornerShape(6.dp)),
             contentAlignment = Alignment.Center
         ) {
-            //Orange3
+            //Blue3
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Orange3, RoundedCornerShape(6.dp))
+                    .background(color3, RoundedCornerShape(6.dp))
             ) {
-                //Orange2
+                //Blue2
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(bottom = 4.dp)
-                        .background(Orange2, RoundedCornerShape(6.dp)),
+                        .background(color2, RoundedCornerShape(6.dp)),
                     contentAlignment = Alignment.Center
                 ) {
-                    //Orange1
+                    //Blue1
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Orange1, RoundedCornerShape(6.dp))
+                            .background(color1, RoundedCornerShape(6.dp))
                             .shadow(
                                 elevation = 4.dp,
                                 shape = RoundedCornerShape(6.dp),
-                                spotColor = Color.Red
+                                spotColor = Color.Black
                             ),
                         contentAlignment = Alignment.Center
                     ) {
@@ -142,23 +177,24 @@ fun ClashRoyaleButton() {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(4.dp)
-                                .background(Orange1, RoundedCornerShape(6.dp)),
+                                .background(color1, RoundedCornerShape(4.dp)),
                         ) {
                             Box(
-                                modifier = Modifier.fillMaxSize()
-                                    .clip(RoundedCornerShape(6.dp))
-                                .offset(22.5.dp, 27.dp).rotate(-45F),
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .offset(22.5.dp, 27.dp)
+                                    .rotate(-45F),
                                 contentAlignment = Alignment.TopEnd
                             ) {
 
-                                Box() {
+                                Box {
                                     Canvas(modifier = Modifier.fillMaxSize()) {
                                         val width = size.width
-                                        val height = size.height
                                         drawOval(
-                                            color = OrangeDetail,
-                                            topLeft = Offset(width-10, 0F),
-                                            size = Size(10f,16f)
+                                            color = colorDetail,
+                                            topLeft = Offset(width - 7F, 1F),
+                                            size = Size(10f, 15f)
                                         )
                                     }
                                 }
@@ -169,8 +205,14 @@ fun ClashRoyaleButton() {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "Battle",
-                                    fontSize = 18.sp
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 4.dp),
+                                    text = text,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 18.sp,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Clip
                                 )
                             }
                         }
