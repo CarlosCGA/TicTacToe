@@ -18,10 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -159,7 +156,7 @@ fun ClashRoyaleButton(
                                     val width = size.width
                                     drawOval(
                                         color = colorDetail,
-                                        topLeft = Offset(width - 7F, 1F),
+                                        topLeft = Offset(width+2F, 5F),
                                         size = Size(10f, 15f)
                                     )
                                 }
