@@ -66,9 +66,16 @@ fun Body(viewModel: HomeViewModel, navigateToGame: (String, String, Boolean) -> 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        //verticalArrangement = Arrangement.Center
     ) {
-        //TODO BRAND IMAGE
+        Spacer(modifier = Modifier.weight(1F))
+        Image(
+            modifier = Modifier.size(300.dp),
+            painter = painterResource(id = R.drawable.ic_tictactoe_clashroyale_remix),
+            contentDescription = "app icon"
+        )
+
+        Spacer(modifier = Modifier.size(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -88,6 +95,8 @@ fun Body(viewModel: HomeViewModel, navigateToGame: (String, String, Boolean) -> 
 
             JoinTheGame(onJoinGame = { viewModel.onJoinGame(it, navigateToGame) })
         }
+
+        Spacer(modifier = Modifier.weight(1F))
     }
 }
 
@@ -156,7 +165,7 @@ fun ClashRoyaleButton(
                                     val width = size.width
                                     drawOval(
                                         color = colorDetail,
-                                        topLeft = Offset(width+2F, 5F),
+                                        topLeft = Offset(width + 2F, 5F),
                                         size = Size(10f, 15f)
                                     )
                                 }
