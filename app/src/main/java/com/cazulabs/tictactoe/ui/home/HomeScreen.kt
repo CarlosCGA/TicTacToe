@@ -55,36 +55,44 @@ fun HomeScreen(
     navigateToGame: (String, String, Boolean) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.home_background),
-            contentDescription = "background",
-            contentScale = ContentScale.Crop
-        )
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.weight(1F))
-
-            CreateGame(onCreateGame = {
-                viewModel.onCreateGame(navigateToGame)
-            })
-
-            Spacer(modifier = Modifier.weight(1F))
-
-            Divider(
-                Modifier
-                    .fillMaxWidth()
-                    .height(2.dp)
-            )
-
-            Spacer(modifier = Modifier.weight(1F))
-
-            JoinTheGame(onJoinGame = { viewModel.onJoinGame(it, navigateToGame) })
-
-            Spacer(modifier = Modifier.weight(1F))
-        }
+        Background()
+        Body(viewModel, navigateToGame)
     }
+}
+
+@Composable
+fun Body(viewModel: HomeViewModel, navigateToGame: (String, String, Boolean) -> Unit) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Spacer(modifier = Modifier.weight(1F))
+
+        CreateGame(onCreateGame = {
+            viewModel.onCreateGame(navigateToGame)
+        })
+
+        Spacer(modifier = Modifier.weight(1F))
+
+        Divider(
+            Modifier
+                .fillMaxWidth()
+                .height(2.dp)
+        )
+
+        Spacer(modifier = Modifier.weight(1F))
+
+        JoinTheGame(onJoinGame = { viewModel.onJoinGame(it, navigateToGame) })
+
+        Spacer(modifier = Modifier.weight(1F))
+    }
+}
+
+@Composable
+fun Background() {
+    Image(
+        modifier = Modifier.fillMaxSize(),
+        painter = painterResource(id = R.drawable.home_background),
+        contentDescription = "background",
+        contentScale = ContentScale.Crop
+    )
 }
 
 @Composable
