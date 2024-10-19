@@ -4,14 +4,18 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -62,26 +66,125 @@ fun HomeScreen(
 
 @Composable
 fun Body(viewModel: HomeViewModel, navigateToGame: (String, String, Boolean) -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.weight(1F))
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        //TODO BRAND IMAGE
 
-        CreateGame(onCreateGame = {
-            viewModel.onCreateGame(navigateToGame)
-        })
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            ClashRoyaleButton(
+                color3 = Orange3,
+                color2 = Orange2,
+                color1 = Orange1,
+                colorSpotShadow = Color.Red,
+                colorDetail = OrangeDetail,
+                text = "Battle",
+                onClick = { viewModel.onCreateGame(navigateToGame) }
+            )
 
-        Spacer(modifier = Modifier.weight(1F))
+            Spacer(modifier = Modifier.size(16.dp))
 
-        Divider(
-            Modifier
-                .fillMaxWidth()
-                .height(2.dp)
-        )
+            JoinTheGame(onJoinGame = { viewModel.onJoinGame(it, navigateToGame) })
+        }
+    }
+}
 
-        Spacer(modifier = Modifier.weight(1F))
+@Composable
+fun ClashRoyaleButton(
+    color3: Color,
+    color2: Color,
+    color1: Color,
+    colorSpotShadow: Color = Color.Black,
+    colorDetail: Color,
+    text: String,
+    onClick: () -> Unit
+) {
+    //Black border
+    Box(
+        modifier = Modifier
+            .height(60.dp)
+            .width(100.dp)
+            .border(1.dp, Color.Black, RoundedCornerShape(6.dp))
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        //Blue3
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color3, RoundedCornerShape(6.dp))
+        ) {
+            //Blue2
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 4.dp)
+                    .background(color2, RoundedCornerShape(6.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                //Blue1
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color1, RoundedCornerShape(6.dp))
+                        .shadow(
+                            elevation = 4.dp,
+                            shape = RoundedCornerShape(6.dp),
+                            spotColor = colorSpotShadow
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(4.dp)
+                            .background(color1, RoundedCornerShape(4.dp)),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(4.dp))
+                                .offset(22.5.dp, 27.dp)
+                                .rotate(-45F),
+                            contentAlignment = Alignment.TopEnd
+                        ) {
 
-        JoinTheGame(onJoinGame = { viewModel.onJoinGame(it, navigateToGame) })
-
-        Spacer(modifier = Modifier.weight(1F))
+                            Box {
+                                Canvas(modifier = Modifier.fillMaxSize()) {
+                                    val width = size.width
+                                    drawOval(
+                                        color = colorDetail,
+                                        topLeft = Offset(width - 7F, 1F),
+                                        size = Size(10f, 15f)
+                                    )
+                                }
+                            }
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 4.dp),
+                                text = text,
+                                textAlign = TextAlign.Center,
+                                fontSize = 22.sp,
+                                maxLines = 1,
+                                overflow = TextOverflow.Clip
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -96,22 +199,21 @@ fun Background() {
 }
 
 @Composable
-fun CreateGame(onCreateGame: () -> Unit) {
-    Button(onClick = { onCreateGame() }) {
-        Text(text = "Create game")
-    }
-}
-
-@Composable
 fun JoinTheGame(onJoinGame: (String) -> Unit) {
     var gameName by rememberSaveable {
         mutableStateOf("")
     }
-    TextField(value = gameName, onValueChange = { gameName = it })
 
-    Button(onClick = { onJoinGame(gameName) }, enabled = gameName.isNotEmpty()) {
-        Text(text = "Join the game")
-    }
+    ClashRoyaleButton(
+        color3 = Blue3,
+        color2 = Blue2,
+        color1 = Blue1,
+        colorDetail = BlueDetail,
+        text = "Join",
+        onClick = {
+            onJoinGame(gameName)
+        }
+    )
 }
 
 @Preview(showBackground = true)
@@ -121,8 +223,10 @@ fun BattleButton() {
         color3 = Orange3,
         color2 = Orange2,
         color1 = Orange1,
+        colorSpotShadow = Color.Red,
         colorDetail = OrangeDetail,
-        text = "Battle"
+        text = "Battle",
+        onClick = {}
     )
 }
 
@@ -134,99 +238,7 @@ fun JoinButton() {
         color2 = Blue2,
         color1 = Blue1,
         colorDetail = BlueDetail,
-        text = "Join"
+        text = "Join",
+        onClick = {}
     )
-}
-
-@Composable
-fun ClashRoyaleButton(
-    color3: Color,
-    color2: Color,
-    color1: Color,
-    colorDetail: Color,
-    text: String
-) {
-    Box(modifier = Modifier.padding(8.dp)) {
-        //Black border
-        Box(
-            modifier = Modifier
-                .height(50.dp)
-                .width(100.dp)
-                .border(1.dp, Color.Black, RoundedCornerShape(6.dp)),
-            contentAlignment = Alignment.Center
-        ) {
-            //Blue3
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color3, RoundedCornerShape(6.dp))
-            ) {
-                //Blue2
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 4.dp)
-                        .background(color2, RoundedCornerShape(6.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    //Blue1
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color1, RoundedCornerShape(6.dp))
-                            .shadow(
-                                elevation = 4.dp,
-                                shape = RoundedCornerShape(6.dp),
-                                spotColor = Color.Black
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(4.dp)
-                                .background(color1, RoundedCornerShape(4.dp)),
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .offset(22.5.dp, 27.dp)
-                                    .rotate(-45F),
-                                contentAlignment = Alignment.TopEnd
-                            ) {
-
-                                Box {
-                                    Canvas(modifier = Modifier.fillMaxSize()) {
-                                        val width = size.width
-                                        drawOval(
-                                            color = colorDetail,
-                                            topLeft = Offset(width - 7F, 1F),
-                                            size = Size(10f, 15f)
-                                        )
-                                    }
-                                }
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 4.dp),
-                                    text = text,
-                                    textAlign = TextAlign.Center,
-                                    fontSize = 18.sp,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Clip
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
