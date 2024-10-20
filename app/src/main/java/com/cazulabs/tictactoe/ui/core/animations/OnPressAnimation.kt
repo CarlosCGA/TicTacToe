@@ -39,6 +39,36 @@ suspend fun onPressAnimation(
     }
 }
 
+suspend fun onPressAnimation(
+    pressGestureScope: PressGestureScope,
+    width: Float,
+    height: Float,
+    onNewHeight: (Float) -> Unit,
+    onNewWidth: (Float) -> Unit,
+    coroutineScope: CoroutineScope,
+    onPressed: () -> Unit = {},
+    onReleased: () -> Unit = {},
+    onCanceled: () -> Unit = {}
+): Job {
+    return coroutineScope.launch {
+        animateSmall(coroutineScope, height, onNewHeight)()
+        animateSmall(coroutineScope, width, onNewWidth)()
+        onPressed()
+
+        val released = try {
+            pressGestureScope.tryAwaitRelease()
+        } catch (c: CancellationException) {
+            false
+        }
+        animateBig(coroutineScope, height, onNewHeight)()
+        animateBig(coroutineScope, width, onNewWidth)()
+        if (released)
+            onReleased()
+        else
+            onCanceled()
+    }
+}
+
 suspend fun animateSmall(
     animationRoutine: CoroutineScope,
     size: Float,
