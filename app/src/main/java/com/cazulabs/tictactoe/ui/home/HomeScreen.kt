@@ -1,6 +1,8 @@
 package com.cazulabs.tictactoe.ui.home
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,12 +16,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -30,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cazulabs.tictactoe.R
 import com.cazulabs.tictactoe.ui.core.ClashRoyaleButton
 import com.cazulabs.tictactoe.ui.core.ClashRoyaleDialog
+import com.cazulabs.tictactoe.ui.core.animations.onPressAnimationWithBounce
 import com.cazulabs.tictactoe.ui.theme.Blue1
 import com.cazulabs.tictactoe.ui.theme.Blue2
 import com.cazulabs.tictactoe.ui.theme.Blue3
@@ -70,16 +76,43 @@ fun Body(
     navigateToGame: (String, String, Boolean) -> Unit,
     onClickJoinGameButton: () -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
+    var mainIconTargetSize by rememberSaveable {
+        mutableFloatStateOf(300F)
+    }
+
+    val mainIconSize by animateFloatAsState(
+        targetValue = mainIconTargetSize,
+        label = "animate info button size"
+    )
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(0.75F))
         Image(
-            modifier = Modifier.size(300.dp),
+            modifier = Modifier
+                .size(mainIconSize.dp)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            onPressAnimationWithBounce(
+                                pressGestureScope = this,
+                                size = mainIconTargetSize,
+                                onNewSize = { newSize -> mainIconTargetSize = newSize },
+                                coroutineScope = coroutineScope,
+                                onReleased = {}
+                            )
+                        }
+                    )
+                },
             painter = painterResource(id = R.drawable.ic_tictactoe_clashroyale_remix),
             contentDescription = "app icon"
         )
+
+        Spacer(modifier = Modifier.size(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
