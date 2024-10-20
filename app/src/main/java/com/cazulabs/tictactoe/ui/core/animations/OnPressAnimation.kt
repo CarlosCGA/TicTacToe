@@ -9,8 +9,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-private const val ANIMATION_DURATION = 100
-private const val SIZE_DELTA = 5
+private const val ANIMATION_DURATION = 25
+private const val INITIAL_VELOCITY = 50F
+private const val SIZE_DELTA = 2
 
 suspend fun onPressAnimation(
     pressGestureScope: PressGestureScope,
@@ -50,8 +51,9 @@ suspend fun animateSmall(
             coroutineScope {
                 launch {
                     animate(
-                        size,
-                        pressSize,
+                        initialValue = size,
+                        targetValue = pressSize,
+                        initialVelocity = INITIAL_VELOCITY,
                         animationSpec = tween(ANIMATION_DURATION),
                         block = { value, _ -> onNewSize(value) }
                     )
@@ -73,8 +75,9 @@ suspend fun animateBig(
             coroutineScope {
                 launch {
                     animate(
-                        pressSize,
-                        size,
+                        initialValue = pressSize,
+                        targetValue = size,
+                        initialVelocity = INITIAL_VELOCITY,
                         animationSpec = tween(ANIMATION_DURATION),
                         block = { value, _ -> onNewSize(value) }
                     )
