@@ -12,6 +12,7 @@ import androidx.compose.ui.semantics.invisibleToUser
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,19 +20,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
+import com.cazulabs.tictactoe.R
 
 @ExperimentalComposeUiApi
 @Composable
 fun OutlinedText(
     text: String,
     modifier: Modifier = Modifier,
-    fillColor: Color = Color.Unspecified,
-    outlineColor: Color,
+    fillColor: Color = Color.White,
+    outlineColor: Color = Color.Black,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,
-    fontFamily: FontFamily? = null,
-    letterSpacing: TextUnit = TextUnit.Unspecified,
+    fontFamily: FontFamily? = FontFamily(Font(R.font.supercell_magic_regular)),
+    letterSpacing: TextUnit = TextUnit(1F, TextUnitType.Sp),
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
     lineHeight: TextUnit = TextUnit.Unspecified,
@@ -41,7 +44,7 @@ fun OutlinedText(
     minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current,
-    outlineDrawStyle: Stroke = Stroke(),
+    outlineDrawStyle: Stroke = Stroke(8F),
 ) {
     Box(modifier = modifier) {
         Text(
