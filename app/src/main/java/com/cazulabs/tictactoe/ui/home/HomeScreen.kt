@@ -1,7 +1,6 @@
 package com.cazulabs.tictactoe.ui.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,11 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cazulabs.tictactoe.R
 import com.cazulabs.tictactoe.ui.core.ClashRoyaleButton
+import com.cazulabs.tictactoe.ui.core.ClashRoyaleDialog
 import com.cazulabs.tictactoe.ui.theme.Blue1
 import com.cazulabs.tictactoe.ui.theme.Blue2
 import com.cazulabs.tictactoe.ui.theme.Blue3
@@ -69,8 +72,7 @@ fun Body(
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        //verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(0.75F))
         Image(
@@ -131,33 +133,46 @@ fun JoinGameButton(onClick: () -> Unit) {
 
 @Composable
 fun JoinGameDialog(onDismiss: () -> Unit, onJoinGame: (String) -> Unit) {
-    var gameName by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    Dialog(onDismissRequest = onDismiss) {
-        Box(modifier = Modifier.background(Color.White, RoundedCornerShape(6.dp))) {
+    ClashRoyaleDialog(
+        title = "Game code",
+        content = {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                var gameName by rememberSaveable {
+                    mutableStateOf("")
+                }
+
                 Spacer(modifier = Modifier.size(16.dp))
 
-                OutlinedTextField(value = gameName, onValueChange = { gameName = it })
+                OutlinedTextField(
+                    value = gameName,
+                    onValueChange = { gameName = it },
+                    textStyle = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.supercell_magic_regular))
+                    )
+                )
+
                 Spacer(modifier = Modifier.size(16.dp))
+
                 ClashRoyaleButton(
                     color3 = Blue3,
                     color2 = Blue2,
                     color1 = Blue1,
                     colorDetail = BlueDetail,
-                    text = "OK"
-                ) {
-                    onJoinGame(gameName)
-                    onDismiss()
-                }
+                    text = "OK",
+                    onClick = {
+                        onJoinGame(gameName)
+                        onDismiss()
+                    }
+                )
 
                 Spacer(modifier = Modifier.size(16.dp))
             }
-        }
-    }
+        },
+        onDismiss = onDismiss
+    )
 }
