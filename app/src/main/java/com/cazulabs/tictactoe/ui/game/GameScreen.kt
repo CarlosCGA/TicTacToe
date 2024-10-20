@@ -120,7 +120,7 @@ fun WonScreen(player: PlayerType, winner: PlayerType) {
             text = if (player == winner)
                 "YOU WIN!"
             else
-                "Oh shit. You are a piece of shit..."
+                "Damn. You are a piece of shit..."
         )
     }
 }
