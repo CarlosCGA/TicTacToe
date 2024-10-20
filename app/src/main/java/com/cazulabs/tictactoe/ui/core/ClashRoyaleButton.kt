@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cazulabs.tictactoe.R
-import com.cazulabs.tictactoe.ui.home.OutlinedText
 import com.cazulabs.tictactoe.ui.theme.Blue1
 import com.cazulabs.tictactoe.ui.theme.Blue2
 import com.cazulabs.tictactoe.ui.theme.Blue3
