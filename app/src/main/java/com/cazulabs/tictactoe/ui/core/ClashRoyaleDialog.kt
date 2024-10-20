@@ -142,7 +142,7 @@ fun ClashRoyaleDialog(
                                     color1 = Blue1,
                                     colorDetail = BlueDetail,
                                     text = "X",
-                                    onClick = {}
+                                    onClick = { onDismiss() }
                                 )
                             }
 
