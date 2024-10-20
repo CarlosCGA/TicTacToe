@@ -4,15 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -118,14 +115,18 @@ fun ClashRoyaleDialog(
                         )
 
                         Column(modifier = Modifier.fillMaxWidth()) {
-                            Row(
+                            val defaultSize = 40.dp
+                            val verticalRowPadding = 6.dp
+
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 10.dp, vertical = 6.dp),
-                                verticalAlignment = Alignment.CenterVertically
+                                    .height(defaultSize + verticalRowPadding)
+                                    .padding(horizontal = 10.dp, vertical = verticalRowPadding),
+                                contentAlignment = Alignment.Center
                             ) {
                                 Box(
-                                    modifier = Modifier.weight(1F),
+                                    modifier = Modifier.fillMaxWidth(),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     OutlinedText(
@@ -136,14 +137,19 @@ fun ClashRoyaleDialog(
                                     )
                                 }
 
-                                ClashRoyaleSquareButton(
-                                    color3 = RedCloseDialogButtonBorderDark,
-                                    color2 = RedCloseDialogButtonBackground,
-                                    color1 = Blue1,
-                                    colorDetail = BlueDetail,
-                                    text = "X",
-                                    onClick = { onDismiss() }
-                                )
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.CenterEnd
+                                ) {
+                                    ClashRoyaleSquareButton(
+                                        color3 = RedCloseDialogButtonBorderDark,
+                                        color2 = RedCloseDialogButtonBackground,
+                                        color1 = Blue1,
+                                        colorDetail = BlueDetail,
+                                        text = "X",
+                                        onClick = { onDismiss() }
+                                    )
+                                }
                             }
 
                             //Content
