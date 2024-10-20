@@ -3,22 +3,32 @@ package com.cazulabs.tictactoe.ui.core
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.cazulabs.tictactoe.ui.theme.Blue1
+import com.cazulabs.tictactoe.ui.theme.BlueDetail
+import com.cazulabs.tictactoe.ui.theme.DialogBackgroundContent
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundDarkGradient
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundDarkGradientDetail
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundLightGradient
@@ -28,53 +38,25 @@ import com.cazulabs.tictactoe.ui.theme.DialogBorderDarkGradient
 import com.cazulabs.tictactoe.ui.theme.DialogBorderLight2
 import com.cazulabs.tictactoe.ui.theme.DialogBorderLightGradient
 import com.cazulabs.tictactoe.ui.theme.DialogShadow
-
-/*
-@Preview(showSystemUi = true)
-@Composable
-fun ClashRoyaleDialog() {
-    Dialog(onDismissRequest = { /*TODO*/ }) {
-        Box(modifier = Modifier.clip(RoundedCornerShape(6.dp))) {
-            Column {
-                Spacer(modifier = Modifier.size(16.dp))
-                ClashRoyaleButton(
-                    color3 = Blue3,
-                    color2 = Blue2,
-                    color1 = Blue1,
-                    colorDetail = BlueDetail,
-                    text = "OK",
-                    onClick = {}
-                )
-            }
-        }
-    }
-}
-*/
-
-@Preview(showBackground = true)
-@Composable
-fun Alfombra() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        ClashRoyaleDialog()
-    }
-}
+import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBackground
+import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBorderDark
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ClashRoyaleDialog() {
+fun ClashRoyaleDialog(
+    title: String,
+    content: @Composable () -> Unit,
+    onDismiss: () -> Unit
+) {
     val cornerRadius = 12.dp
     Dialog(
-        onDismissRequest = { /*TODO*/ },
+        onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.9F)
-                .height(300.dp)
+                .wrapContentHeight()
                 .background(DialogShadow, RoundedCornerShape(cornerRadius))
         ) {
             Box(
@@ -135,12 +117,46 @@ fun ClashRoyaleDialog() {
                                 )
                         )
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 8.dp)
-                        ) {
-                            OutlinedText(text = "Reward limit reached!", fontSize = 16.sp)
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 10.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier.weight(1F),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    OutlinedText(
+                                        text = title,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        fontSize = 16.sp
+                                    )
+                                }
+
+                                ClashRoyaleSquareButton(
+                                    color3 = RedCloseDialogButtonBorderDark,
+                                    color2 = RedCloseDialogButtonBackground,
+                                    color1 = Blue1,
+                                    colorDetail = BlueDetail,
+                                    text = "X",
+                                    onClick = {}
+                                )
+                            }
+
+                            //Content
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 8.dp)
+                                    .verticalScroll(rememberScrollState())
+                                    .background(DialogBackgroundContent, RoundedCornerShape(4.dp)),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                content()
+                            }
                         }
                     }
                 }
@@ -149,3 +165,23 @@ fun ClashRoyaleDialog() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun Alfombra() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        ClashRoyaleDialog(
+            title = "Reward limit reached!",
+            content = {
+                Text(
+                    modifier = Modifier.padding(8.dp),
+                    text = "Hello world!"
+                )
+            },
+            onDismiss = {}
+        )
+    }
+}
