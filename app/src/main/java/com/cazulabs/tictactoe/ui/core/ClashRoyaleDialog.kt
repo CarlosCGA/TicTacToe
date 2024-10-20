@@ -150,7 +150,7 @@ fun ClashRoyaleDialog(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 8.dp)
+                                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                     .verticalScroll(rememberScrollState())
                                     .background(DialogBackgroundContent, RoundedCornerShape(4.dp)),
                                 horizontalAlignment = Alignment.CenterHorizontally
@@ -167,7 +167,7 @@ fun ClashRoyaleDialog(
 
 @Preview(showBackground = true)
 @Composable
-fun Alfombra() {
+fun DialogPreview() {
     Box(
         modifier = Modifier
             .fillMaxSize()
