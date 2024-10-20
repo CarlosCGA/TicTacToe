@@ -182,6 +182,7 @@ private fun JoinButton() {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ClashRoyaleSquareButton(
+    modifier: Modifier = Modifier,
     color3: Color,
     color2: Color,
     color1: Color,
@@ -194,8 +195,8 @@ fun ClashRoyaleSquareButton(
 
     //Black border
     Box(
-        modifier = Modifier
-            .size(50.dp)
+        modifier = modifier
+            .size(30.dp)
             .border(1.dp, Color.Black, RoundedCornerShape(cornerRadius))
             .clickable { onClick() },
         contentAlignment = Alignment.Center
@@ -216,7 +217,7 @@ fun ClashRoyaleSquareButton(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 6.dp, top = 3.dp)
+                    .padding(bottom = 4.dp, top = 2.dp)
                     .background(color2, RoundedCornerShape(10.dp)),
                 contentAlignment = Alignment.Center
             ) {
@@ -226,7 +227,7 @@ fun ClashRoyaleSquareButton(
                         .fillMaxSize()
                         .padding(top = 1.dp, bottom = 2.dp, start = 2.dp, end = 1.dp),
                 ) {
-                    val cornerRadius1 = 10.dp
+                    val cornerRadius1 = 8.dp
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -262,7 +263,7 @@ fun ClashRoyaleSquareButton(
                         .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    OutlinedText(text = text, fontSize = 28.sp)
+                    OutlinedText(text = text, fontSize = 12.sp)
                 }
             }
         }
