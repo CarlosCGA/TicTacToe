@@ -23,8 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.cazulabs.tictactoe.ui.theme.Blue1
-import com.cazulabs.tictactoe.ui.theme.BlueDetail
+import com.cazulabs.tictactoe.ui.core.buttons.ClashRoyaleSquareButton
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundContent
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundDarkGradient
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundDarkGradientDetail
@@ -37,6 +36,9 @@ import com.cazulabs.tictactoe.ui.theme.DialogBorderLightGradient
 import com.cazulabs.tictactoe.ui.theme.DialogShadow
 import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBackground
 import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBorderDark
+import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBorderLight
+import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonHalfBottom
+import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonHalfTop
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -142,10 +144,11 @@ fun ClashRoyaleDialog(
                                     contentAlignment = Alignment.CenterEnd
                                 ) {
                                     ClashRoyaleSquareButton(
-                                        color3 = RedCloseDialogButtonBorderDark,
-                                        color2 = RedCloseDialogButtonBackground,
-                                        color1 = Blue1,
-                                        colorDetail = BlueDetail,
+                                        borderDark = RedCloseDialogButtonBorderDark,
+                                        borderLight = RedCloseDialogButtonBorderLight,
+                                        background = RedCloseDialogButtonBackground,
+                                        foregroundDark = RedCloseDialogButtonHalfTop,
+                                        foregroundLight = RedCloseDialogButtonHalfBottom,
                                         text = "X",
                                         onClick = { onDismiss() }
                                     )

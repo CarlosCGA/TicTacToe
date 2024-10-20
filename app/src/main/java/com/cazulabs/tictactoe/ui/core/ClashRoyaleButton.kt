@@ -4,7 +4,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cazulabs.tictactoe.R
 import com.cazulabs.tictactoe.ui.core.animations.onPressAnimation
-import com.cazulabs.tictactoe.ui.core.animations.onPressAnimationWithBounce
 import com.cazulabs.tictactoe.ui.theme.Blue1
 import com.cazulabs.tictactoe.ui.theme.Blue2
 import com.cazulabs.tictactoe.ui.theme.Blue3
@@ -76,7 +74,10 @@ fun ClashRoyaleButton(
     var targetHeight by rememberSaveable { mutableFloatStateOf(defaultHeight) }
 
     val width by animateFloatAsState(targetValue = targetWidth, label = "animate info button size")
-    val height by animateFloatAsState(targetValue = targetHeight, label = "animate info button size")
+    val height by animateFloatAsState(
+        targetValue = targetHeight,
+        label = "animate info button size"
+    )
 
     //Black border
     Box(
@@ -145,10 +146,9 @@ fun ClashRoyaleButton(
 
                             Box {
                                 Canvas(modifier = Modifier.fillMaxSize()) {
-                                    val width = size.width
                                     drawOval(
                                         color = colorDetail,
-                                        topLeft = Offset(width + 2F, 5F),
+                                        topLeft = Offset(size.width + 2F, 5F),
                                         size = Size(10f, 15f)
                                     )
                                 }
@@ -211,130 +211,6 @@ private fun JoinButton() {
         color1 = Blue1,
         colorDetail = BlueDetail,
         text = "Join",
-        onClick = {}
-    )
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-fun ClashRoyaleSquareButton(
-    modifier: Modifier = Modifier,
-    defaultSize: Float = 30F,
-    color3: Color,
-    color2: Color,
-    color1: Color,
-    colorSpotShadow: Color = Color.Black,
-    colorDetail: Color,
-    text: String,
-    onClick: () -> Unit
-) {
-    val coroutineScope = rememberCoroutineScope()
-    val cornerRadius = 6.dp
-
-    var targetSize by rememberSaveable {
-        mutableFloatStateOf(defaultSize)
-    }
-
-    val size by animateFloatAsState(targetValue = targetSize, label = "animate info button size")
-
-    //Black border
-    Box(
-        modifier = modifier
-            .size(size.dp)
-            .border(1.dp, Color.Black, RoundedCornerShape(cornerRadius))
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        onPressAnimation(
-                            pressGestureScope = this,
-                            size = targetSize,
-                            onNewSize = { newSize -> targetSize = newSize },
-                            coroutineScope = coroutineScope,
-                            onReleased = onClick
-                        )
-                    }
-                )
-            },
-        contentAlignment = Alignment.Center
-    ) {
-        val borderBrush = Brush.verticalGradient(
-            colors = listOf(
-                RedCloseDialogButtonBorderLight,
-                RedCloseDialogButtonBorderDark
-            )
-        )
-        //Color3
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(borderBrush, RoundedCornerShape(cornerRadius))
-        ) {
-            //Color2
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 4.dp, top = 2.dp)
-                    .background(color2, RoundedCornerShape(10.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 1.dp, bottom = 2.dp, start = 2.dp, end = 1.dp),
-                ) {
-                    val cornerRadius1 = 8.dp
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1F)
-                            .background(
-                                RedCloseDialogButtonHalfTop,
-                                RoundedCornerShape(
-                                    topStart = cornerRadius1,
-                                    topEnd = cornerRadius1,
-                                    bottomStart = 0.dp,
-                                    bottomEnd = 0.dp,
-                                )
-                            )
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1F)
-                            .background(
-                                RedCloseDialogButtonHalfBottom,
-                                RoundedCornerShape(
-                                    topStart = 0.dp,
-                                    topEnd = 0.dp,
-                                    bottomStart = cornerRadius1,
-                                    bottomEnd = cornerRadius1
-                                )
-                            )
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    OutlinedText(text = text, fontSize = 12.sp)
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun CloseButtonPreview() {
-    ClashRoyaleSquareButton(
-        color3 = RedCloseDialogButtonBorderDark,
-        color2 = RedCloseDialogButtonBackground,
-        color1 = Blue1,
-        colorDetail = BlueDetail,
-        text = "X",
         onClick = {}
     )
 }
