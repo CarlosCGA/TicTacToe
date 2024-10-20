@@ -61,7 +61,7 @@ fun ClashRoyaleDialog(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(bottom = 4.dp)
                     .background(DialogBorderLightGradient, RoundedCornerShape(cornerRadius))
                     .innerShadow(
@@ -80,7 +80,7 @@ fun ClashRoyaleDialog(
                 )
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .padding(bottom = 4.dp, start = 2.dp, end = 2.dp, top = 2.dp)
                         .border(0.5.dp, borderGradientBrush, RoundedCornerShape(cornerRadius))
                 ) {
@@ -92,7 +92,7 @@ fun ClashRoyaleDialog(
                     )
                     Box(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
                             .background(backgroundGradientBrush, RoundedCornerShape(cornerRadius))
                     ) {
                         val backgroundGradientDetailBrush = Brush.verticalGradient(
