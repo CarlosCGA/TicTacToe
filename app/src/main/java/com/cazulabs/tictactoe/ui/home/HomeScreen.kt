@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -32,13 +34,23 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.invisibleToUser
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cazulabs.tictactoe.R
 import com.cazulabs.tictactoe.ui.theme.Blue1
@@ -68,14 +80,12 @@ fun Body(viewModel: HomeViewModel, navigateToGame: (String, String, Boolean) -> 
         horizontalAlignment = Alignment.CenterHorizontally,
         //verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.weight(1F))
+        Spacer(modifier = Modifier.weight(0.75F))
         Image(
             modifier = Modifier.size(300.dp),
             painter = painterResource(id = R.drawable.ic_tictactoe_clashroyale_remix),
             contentDescription = "app icon"
         )
-
-        Spacer(modifier = Modifier.size(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -100,6 +110,7 @@ fun Body(viewModel: HomeViewModel, navigateToGame: (String, String, Boolean) -> 
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ClashRoyaleButton(
     color3: Color,
@@ -113,8 +124,8 @@ fun ClashRoyaleButton(
     //Black border
     Box(
         modifier = Modifier
-            .height(60.dp)
-            .width(100.dp)
+            .height(65.dp)
+            .width(130.dp)
             .border(1.dp, Color.Black, RoundedCornerShape(6.dp))
             .clickable { onClick() },
         contentAlignment = Alignment.Center
@@ -155,7 +166,7 @@ fun ClashRoyaleButton(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(4.dp))
-                                .offset(22.5.dp, 27.dp)
+                                .offset(28.5.dp, 37.dp)
                                 .rotate(-45F),
                             contentAlignment = Alignment.TopEnd
                         ) {
@@ -176,15 +187,26 @@ fun ClashRoyaleButton(
                                 .fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
+                            /*
                             Text(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 4.dp),
                                 text = text,
                                 textAlign = TextAlign.Center,
-                                fontSize = 22.sp,
+                                fontFamily = FontFamily(Font(R.font.lilita_one_regular)),
+                                color = Color.White,
+                                fontSize = 20.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Clip
+                            )
+                            */
+                            OutlinedText(
+                                text = text,
+                                outlineColor = Color.Black,
+                                fillColor = Color.White,
+                                fontFamily = FontFamily(Font(R.font.supercell_magic_regular)),
+                                outlineDrawStyle = Stroke(8F)
                             )
                         }
                     }
@@ -247,4 +269,72 @@ fun JoinButton() {
         text = "Join",
         onClick = {}
     )
+}
+
+@ExperimentalComposeUiApi
+@Composable
+fun OutlinedText(
+    text: String,
+    modifier: Modifier = Modifier,
+    fillColor: Color = Color.Unspecified,
+    outlineColor: Color,
+    fontSize: TextUnit = TextUnit.Unspecified,
+    fontStyle: FontStyle? = null,
+    fontWeight: FontWeight? = null,
+    fontFamily: FontFamily? = null,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    minLines: Int = 1,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+    style: TextStyle = LocalTextStyle.current,
+    outlineDrawStyle: Stroke = Stroke(),
+) {
+    Box(modifier = modifier) {
+        Text(
+            text = text,
+            modifier = Modifier.semantics { invisibleToUser() },
+            color = outlineColor,
+            fontSize = fontSize,
+            fontStyle = fontStyle,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily,
+            letterSpacing = letterSpacing,
+            textDecoration = null,
+            textAlign = textAlign,
+            lineHeight = lineHeight,
+            overflow = overflow,
+            softWrap = softWrap,
+            maxLines = maxLines,
+            minLines = minLines,
+            onTextLayout = onTextLayout,
+            style = style.copy(
+                shadow = null,
+                drawStyle = outlineDrawStyle,
+            ),
+        )
+
+        Text(
+            text = text,
+            color = fillColor,
+            fontSize = fontSize,
+            fontStyle = fontStyle,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily,
+            letterSpacing = letterSpacing,
+            textDecoration = textDecoration,
+            textAlign = textAlign,
+            lineHeight = lineHeight,
+            overflow = overflow,
+            softWrap = softWrap,
+            maxLines = maxLines,
+            minLines = minLines,
+            onTextLayout = onTextLayout,
+            style = style,
+        )
+    }
 }
