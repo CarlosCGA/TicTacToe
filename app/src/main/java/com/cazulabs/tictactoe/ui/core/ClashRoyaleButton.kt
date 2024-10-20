@@ -44,11 +44,15 @@ import com.cazulabs.tictactoe.ui.theme.Orange2
 import com.cazulabs.tictactoe.ui.theme.Orange3
 import com.cazulabs.tictactoe.ui.theme.OrangeDetail
 
+const val BUTTON_DEFAULT_WIDTH = 130F
+const val BUTTON_DEFAULT_HEIGHT = 65F
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ClashRoyaleButton(
-    defaultWidth: Float = 130F,
-    defaultHeight: Float = 65F,
+    modifier: Modifier = Modifier,
+    defaultWidth: Float = BUTTON_DEFAULT_WIDTH,
+    defaultHeight: Float = BUTTON_DEFAULT_HEIGHT,
     color3: Color,
     color2: Color,
     color1: Color,
@@ -69,107 +73,113 @@ fun ClashRoyaleButton(
         label = "animate info button size"
     )
 
-    //Black border
     Box(
-        modifier = Modifier
-            .width(width.dp)
-            .height(height.dp)
-            .border(1.dp, Color.Black, RoundedCornerShape(cornerRadius))
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        onPressAnimation(
-                            pressGestureScope = this,
-                            width = targetWidth,
-                            height = targetHeight,
-                            onNewWidth = { newSize -> targetWidth = newSize },
-                            onNewHeight = { newSize -> targetHeight = newSize },
-                            coroutineScope = coroutineScope,
-                            onReleased = onClick
-                        )
-                    }
-
-                )
-            },
-        contentAlignment = Alignment.Center
+        modifier = modifier
+            .width(defaultWidth.dp)
+            .height(defaultHeight.dp)
     ) {
-        //Blue3
+        //Black border
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color3, RoundedCornerShape(cornerRadius))
+            modifier = modifier
+                .width(width.dp)
+                .height(height.dp)
+                .border(1.dp, Color.Black, RoundedCornerShape(cornerRadius))
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            onPressAnimation(
+                                pressGestureScope = this,
+                                width = targetWidth,
+                                height = targetHeight,
+                                onNewWidth = { newSize -> targetWidth = newSize },
+                                onNewHeight = { newSize -> targetHeight = newSize },
+                                coroutineScope = coroutineScope,
+                                onReleased = onClick
+                            )
+                        }
+
+                    )
+                },
+            contentAlignment = Alignment.Center
         ) {
-            //Blue2
+            //Blue3
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 4.dp)
-                    .background(color2, RoundedCornerShape(cornerRadius)),
-                contentAlignment = Alignment.Center
+                    .background(color3, RoundedCornerShape(cornerRadius))
             ) {
-                //Blue1
+                //Blue2
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(color1, RoundedCornerShape(cornerRadius))
-                        .shadow(
-                            elevation = 4.dp,
-                            shape = RoundedCornerShape(cornerRadius),
-                            spotColor = colorSpotShadow
-                        ),
+                        .padding(bottom = 4.dp)
+                        .background(color2, RoundedCornerShape(cornerRadius)),
                     contentAlignment = Alignment.Center
                 ) {
+                    //Blue1
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(4.dp)
-                            .background(color1, RoundedCornerShape(4.dp)),
+                            .background(color1, RoundedCornerShape(cornerRadius))
+                            .shadow(
+                                elevation = 4.dp,
+                                shape = RoundedCornerShape(cornerRadius),
+                                spotColor = colorSpotShadow
+                            ),
+                        contentAlignment = Alignment.Center
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(RoundedCornerShape(4.dp))
-                                .offset(28.5.dp, 37.dp)
-                                .rotate(-45F),
-                            contentAlignment = Alignment.TopEnd
+                                .padding(4.dp)
+                                .background(color1, RoundedCornerShape(4.dp)),
                         ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .offset(28.5.dp, 37.dp)
+                                    .rotate(-45F),
+                                contentAlignment = Alignment.TopEnd
+                            ) {
 
-                            Box {
-                                Canvas(modifier = Modifier.fillMaxSize()) {
-                                    drawOval(
-                                        color = colorDetail,
-                                        topLeft = Offset(size.width + 2F, 5F),
-                                        size = Size(10f, 15f)
-                                    )
+                                Box {
+                                    Canvas(modifier = Modifier.fillMaxSize()) {
+                                        drawOval(
+                                            color = colorDetail,
+                                            topLeft = Offset(size.width + 2F, 5F),
+                                            size = Size(10f, 15f)
+                                        )
+                                    }
                                 }
                             }
-                        }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            /*
-                            Text(
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 4.dp),
-                                text = text,
-                                textAlign = TextAlign.Center,
-                                fontFamily = FontFamily(Font(R.font.lilita_one_regular)),
-                                color = Color.White,
-                                fontSize = 20.sp,
-                                maxLines = 1,
-                                overflow = TextOverflow.Clip
-                            )
-                            */
-                            OutlinedText(
-                                text = text,
-                                outlineColor = Color.Black,
-                                fillColor = Color.White,
-                                fontFamily = FontFamily(Font(R.font.supercell_magic_regular)),
-                                outlineDrawStyle = Stroke(8F)
-                            )
+                                    .fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                /*
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 4.dp),
+                                    text = text,
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = FontFamily(Font(R.font.lilita_one_regular)),
+                                    color = Color.White,
+                                    fontSize = 20.sp,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Clip
+                                )
+                                */
+                                OutlinedText(
+                                    text = text,
+                                    outlineColor = Color.Black,
+                                    fillColor = Color.White,
+                                    fontFamily = FontFamily(Font(R.font.supercell_magic_regular)),
+                                    outlineDrawStyle = Stroke(8F)
+                                )
+                            }
                         }
                     }
                 }
