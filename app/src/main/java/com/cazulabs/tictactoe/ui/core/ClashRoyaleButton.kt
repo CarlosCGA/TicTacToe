@@ -6,13 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -29,7 +26,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
@@ -37,7 +33,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.cazulabs.tictactoe.R
 import com.cazulabs.tictactoe.ui.core.animations.onPressAnimation
 import com.cazulabs.tictactoe.ui.theme.Blue1
@@ -48,11 +43,6 @@ import com.cazulabs.tictactoe.ui.theme.Orange1
 import com.cazulabs.tictactoe.ui.theme.Orange2
 import com.cazulabs.tictactoe.ui.theme.Orange3
 import com.cazulabs.tictactoe.ui.theme.OrangeDetail
-import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBackground
-import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBorderDark
-import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonBorderLight
-import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonHalfBottom
-import com.cazulabs.tictactoe.ui.theme.RedCloseDialogButtonHalfTop
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
