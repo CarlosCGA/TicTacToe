@@ -11,7 +11,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 private const val ANIMATION_DURATION = 25
 private const val INITIAL_VELOCITY = 50F
-private const val SIZE_DELTA = 2
+private const val SIZE_DELTA = 3
 
 suspend fun onPressAnimation(
     pressGestureScope: PressGestureScope,
