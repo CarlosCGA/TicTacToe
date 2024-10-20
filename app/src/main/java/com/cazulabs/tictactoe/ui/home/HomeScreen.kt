@@ -87,11 +87,21 @@ fun Body(
 
             Spacer(modifier = Modifier.size(16.dp))
 
-            JoinTheGame(onClick = onClickJoinGameButton)
+            JoinGameButton(onClick = onClickJoinGameButton)
         }
 
         Spacer(modifier = Modifier.weight(1F))
     }
+}
+
+@Composable
+fun Background() {
+    Image(
+        modifier = Modifier.fillMaxSize(),
+        painter = painterResource(id = R.drawable.home_background),
+        contentDescription = "background",
+        contentScale = ContentScale.Crop
+    )
 }
 
 @Composable
@@ -108,17 +118,7 @@ fun CreateGameButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun Background() {
-    Image(
-        modifier = Modifier.fillMaxSize(),
-        painter = painterResource(id = R.drawable.home_background),
-        contentDescription = "background",
-        contentScale = ContentScale.Crop
-    )
-}
-
-@Composable
-fun JoinTheGame(onClick: () -> Unit) {
+fun JoinGameButton(onClick: () -> Unit) {
     ClashRoyaleButton(
         color3 = Blue3,
         color2 = Blue2,
