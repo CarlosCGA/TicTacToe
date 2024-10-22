@@ -1,5 +1,7 @@
 package com.cazulabs.tictactoe.ui.home
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -65,6 +68,7 @@ fun HomeScreen(
 
     if (showJoinGameDialog)
         JoinGameDialog(
+            context = LocalContext.current,
             onDismiss = { showJoinGameDialog = false },
             onJoinGame = { gameName -> viewModel.onJoinGame(gameName, navigateToGame) }
         )
@@ -165,7 +169,7 @@ fun JoinGameButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun JoinGameDialog(onDismiss: () -> Unit, onJoinGame: (String) -> Unit) {
+fun JoinGameDialog(context: Context, onDismiss: () -> Unit, onJoinGame: (String) -> Unit) {
     ClashRoyaleDialog(
         title = "Game code",
         content = {
@@ -198,8 +202,16 @@ fun JoinGameDialog(onDismiss: () -> Unit, onJoinGame: (String) -> Unit) {
                     colorDetail = BlueDetail,
                     text = "OK",
                     onClick = {
-                        onJoinGame(gameName)
-                        onDismiss()
+                        if (gameName.isNotEmpty()) {
+                            onJoinGame(gameName)
+                            onDismiss()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Game code can not be empty",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 )
 
