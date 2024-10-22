@@ -23,6 +23,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -64,14 +65,9 @@ fun ClashRoyaleButton(
     val coroutineScope = rememberCoroutineScope()
     val cornerRadius = 6.dp
 
-    var targetWidth by rememberSaveable { mutableFloatStateOf(defaultWidth) }
-    var targetHeight by rememberSaveable { mutableFloatStateOf(defaultHeight) }
+    var targetScale by rememberSaveable { mutableFloatStateOf(1F) }
 
-    val width by animateFloatAsState(targetValue = targetWidth, label = "animate info button size")
-    val height by animateFloatAsState(
-        targetValue = targetHeight,
-        label = "animate info button size"
-    )
+    val scale by animateFloatAsState(targetValue = targetScale, label = "animate button size")
 
     Box(
         modifier = modifier
@@ -81,18 +77,17 @@ fun ClashRoyaleButton(
         //Black border
         Box(
             modifier = modifier
-                .width(width.dp)
-                .height(height.dp)
+                .width(defaultWidth.dp)
+                .height(defaultHeight.dp)
+                .scale(scale)
                 .border(1.dp, Color.Black, RoundedCornerShape(cornerRadius))
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onPress = {
                             onPressAnimation(
                                 pressGestureScope = this,
-                                width = targetWidth,
-                                height = targetHeight,
-                                onNewWidth = { newSize -> targetWidth = newSize },
-                                onNewHeight = { newSize -> targetHeight = newSize },
+                                scale = targetScale,
+                                onNewScale = { newScale -> targetScale = newScale },
                                 coroutineScope = coroutineScope,
                                 onReleased = onClick
                             )

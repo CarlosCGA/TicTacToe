@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -50,24 +51,23 @@ fun ClashRoyaleSquareButton(
     val coroutineScope = rememberCoroutineScope()
     val cornerRadius = 6.dp
 
-    var targetSize by rememberSaveable {
-        mutableFloatStateOf(defaultSize)
-    }
+    var targetScale by rememberSaveable { mutableFloatStateOf(1F) }
 
-    val size by animateFloatAsState(targetValue = targetSize, label = "animate info button size")
+    val scale by animateFloatAsState(targetValue = targetScale, label = "animate info button size")
 
     //Black border
     Box(
         modifier = modifier
-            .size(size.dp)
+            .size(defaultSize.dp)
+            .scale(scale)
             .border(1.dp, Color.Black, RoundedCornerShape(cornerRadius))
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
                         onPressAnimation(
                             pressGestureScope = this,
-                            size = targetSize,
-                            onNewSize = { newSize -> targetSize = newSize },
+                            scale = targetScale,
+                            onNewScale = { newSize -> targetScale = newSize },
                             coroutineScope = coroutineScope,
                             onReleased = onClick
                         )
