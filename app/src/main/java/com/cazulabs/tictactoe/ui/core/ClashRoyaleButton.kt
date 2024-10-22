@@ -158,20 +158,6 @@ fun ClashRoyaleButton(
                                     .fillMaxSize(),
                                 contentAlignment = Alignment.Center
                             ) {
-                                /*
-                                Text(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 4.dp),
-                                    text = text,
-                                    textAlign = TextAlign.Center,
-                                    fontFamily = FontFamily(Font(R.font.lilita_one_regular)),
-                                    color = Color.White,
-                                    fontSize = 20.sp,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Clip
-                                )
-                                */
                                 OutlinedText(
                                     text = text,
                                     outlineColor = Color.Black,
