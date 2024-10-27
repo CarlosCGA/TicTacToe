@@ -10,7 +10,7 @@ plugins {
 android {
     namespace = "com.cazulabs.tictactoe"
     compileSdk = 34
-    version = "1.2.2"
+    version = "1.2.3"
 
     task("appRelease") {
         doLast {
