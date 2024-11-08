@@ -111,6 +111,10 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
                 isGameWon(board, PlayerType.SecondPlayer) -> {
                     _winner.value = PlayerType.SecondPlayer
                 }
+
+                isADraft(board) -> {
+                    _winner.value = PlayerType.Empty
+                }
             }
         }
     }
@@ -143,5 +147,16 @@ class GameViewModel @Inject constructor(private val firebaseService: FirebaseSer
             else -> false
         }
     }
+
+    private fun isADraft(board: List<PlayerType>) =
+        (board[0] == PlayerType.FirstPlayer || board[0] == PlayerType.SecondPlayer) &&
+                (board[1] == PlayerType.FirstPlayer || board[1] == PlayerType.SecondPlayer) &&
+                (board[2] == PlayerType.FirstPlayer || board[2] == PlayerType.SecondPlayer) &&
+                (board[3] == PlayerType.FirstPlayer || board[3] == PlayerType.SecondPlayer) &&
+                (board[4] == PlayerType.FirstPlayer || board[4] == PlayerType.SecondPlayer) &&
+                (board[5] == PlayerType.FirstPlayer || board[5] == PlayerType.SecondPlayer) &&
+                (board[6] == PlayerType.FirstPlayer || board[6] == PlayerType.SecondPlayer) &&
+                (board[7] == PlayerType.FirstPlayer || board[7] == PlayerType.SecondPlayer) &&
+                (board[8] == PlayerType.FirstPlayer || board[8] == PlayerType.SecondPlayer)
 
 }

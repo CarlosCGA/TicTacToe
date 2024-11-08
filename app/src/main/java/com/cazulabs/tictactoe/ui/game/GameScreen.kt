@@ -117,10 +117,11 @@ fun GameItem(playerType: PlayerType, onItemClicked: () -> Unit) {
 fun WonScreen(player: PlayerType, winner: PlayerType) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
-            text = if (player == winner)
-                "YOU WIN!"
-            else
-                "Damn. You are a piece of shit..."
+            text = when (winner) {
+                player -> "YOU WIN!"
+                PlayerType.Empty -> "REMATCH!"
+                else -> "Damn. You are a piece of shit..."
+            }
         )
     }
 }
