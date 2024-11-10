@@ -27,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,8 +35,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cazulabs.tictactoe.R
-import com.cazulabs.tictactoe.ui.core.ClashRoyaleButton
-import com.cazulabs.tictactoe.ui.core.ClashRoyaleDialog
+import com.cazulabs.tictactoe.ui.core.Background
+import com.cazulabs.tictactoe.ui.core.buttons.ClashRoyaleButton
+import com.cazulabs.tictactoe.ui.core.dialog.ClashRoyaleDialog
 import com.cazulabs.tictactoe.ui.core.animations.onPressAnimationWithBounce
 import com.cazulabs.tictactoe.ui.theme.Blue1
 import com.cazulabs.tictactoe.ui.theme.Blue2
@@ -131,16 +131,6 @@ fun Body(
 
         Spacer(modifier = Modifier.weight(1F))
     }
-}
-
-@Composable
-fun Background() {
-    Image(
-        modifier = Modifier.fillMaxSize(),
-        painter = painterResource(id = R.drawable.home_background),
-        contentDescription = "background",
-        contentScale = ContentScale.Crop
-    )
 }
 
 @Composable

@@ -1,4 +1,4 @@
-package com.cazulabs.tictactoe.ui.core
+package com.cazulabs.tictactoe.ui.core.dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.cazulabs.tictactoe.ui.core.OutlinedText
 import com.cazulabs.tictactoe.ui.core.buttons.ClashRoyaleSquareButton
+import com.cazulabs.tictactoe.ui.core.innerShadow
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundContent
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundDarkGradient
 import com.cazulabs.tictactoe.ui.theme.DialogBackgroundDarkGradientDetail

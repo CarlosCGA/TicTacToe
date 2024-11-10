@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.cazulabs.tictactoe.ui.core.Background
 import com.cazulabs.tictactoe.ui.model.GameModel
 import com.cazulabs.tictactoe.ui.model.PlayerType
 
@@ -39,23 +40,28 @@ fun GameScreen(
     val game: GameModel? by viewModel.game.collectAsState()
     val winner: PlayerType? by viewModel.winner.collectAsState()
 
-    if (winner != null) {
-        WonScreen(viewModel.getPlayer()!!, winner!!)
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "IdMatch: $gameId")
+    Box(modifier = Modifier.fillMaxSize())
+    {
+        Background()
 
-            Spacer(modifier = Modifier.size(16.dp))
+        if (winner != null) {
+            WonScreen(viewModel.getPlayer()!!, winner!!)
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "IdMatch: $gameId")
 
-            Board(
-                game = game,
-                onItemClicked = { position ->
-                    viewModel.onPlayerMoves(position)
-                }
-            )
+                Spacer(modifier = Modifier.size(16.dp))
+
+                Board(
+                    game = game,
+                    onItemClicked = { position ->
+                        viewModel.onPlayerMoves(position)
+                    }
+                )
+            }
         }
     }
 }
